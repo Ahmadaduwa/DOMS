@@ -34,7 +34,7 @@ if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
 
     <div class="container mt-4">
         <div class="form">
-            <form class="form-inline mb-3" action="#" method="get">
+            <form class="form-inline mb-3" action="" method="get">
                 <div class="form-group">
                     <div class="btn-group ml-2" role="group" aria-label="User Type">
                         <?php 
@@ -44,7 +44,7 @@ if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
                             <label class="btn btn-outline-primary" for="<?php echo $type; ?>"><?php echo $type; ?></label>
                         <?php endforeach; ?>
                     </div>
-                <button type="submit" class="btn btn-primary ml-2">Search</button>
+                    <button type="submit" class="btn btn-primary ml-2">Search</button>
                 </div>
             </form>
         </div>
@@ -57,6 +57,7 @@ if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
                     <th>Username</th>
                     <th>Number</th>
                     <th>Documents</th>
+                    <th>Files</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,7 +67,7 @@ if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
                         <td><?php echo htmlspecialchars($user['number']); ?></td>
                         <td>
                             <?php
-                            $stmt = $conn->prepare("SELECT responsible FROM documents WHERE `owner` = ?");
+                            $stmt = $conn->prepare("SELECT responsible FROM documents WHERE owner = ?");
                             $stmt->bind_param("s", $user['number']);
                             $stmt->execute();
                             $result = $stmt->get_result();
@@ -75,6 +76,20 @@ if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
 
                             foreach ($documents as $document) {
                                 echo htmlspecialchars($document['responsible']) . '<br>';
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            $stmt = $conn->prepare("SELECT file_path FROM files WHERE document_id = ?");
+                            $stmt->bind_param("s", $user['number']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            $files = $result->fetch_all(MYSQLI_ASSOC);
+                            $stmt->close();
+
+                            foreach ($files as $file) {
+                                echo "<a href='" . $file . "' target='_blank'>" . basename($file) . "</a><br>";
                             }
                             ?>
                         </td>
