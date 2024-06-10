@@ -58,7 +58,6 @@ foreach ($_FILES['files']['name'] as $key => $name) {
 if ($uploadOk == 1 && !empty($file_paths)) {
     // Save the form data to the database
     $title = $_POST['title'];
-    $main = $_POST['main'];
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
     $academic_year = $_POST['academic_year'];
@@ -79,8 +78,8 @@ if ($uploadOk == 1 && !empty($file_paths)) {
     if ($conn->connect_error) {
         $messages[] = "Connection failed: " . $conn->connect_error;
     } else {
-        $stmt = $conn->prepare("INSERT INTO documents (title, main, start_date, end_date, academic_year, term, description, capacity, responsible, phone, level, owner, at_who, returned) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssisssssi", $title, $main, $start_date, $end_date, $academic_year, $term, $description, $capacity, $responsible, $phone, $level, $owner, $at_who, $returned);
+        $stmt = $conn->prepare("INSERT INTO documents (title, start_date, end_date, academic_year, term, description, capacity, responsible, phone, level, owner, at_who, returned) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssssisssssi", $title, $start_date, $end_date, $academic_year, $term, $description, $capacity, $responsible, $phone, $level, $owner, $at_who, $returned);
 
         if ($stmt->execute()) {
             $document_id = $stmt->insert_id; // Store the ID of the newly added document
