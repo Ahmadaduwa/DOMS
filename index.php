@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>หน้าแรก - เว็ปไซต์ส่งเอกสาร</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./footer/footer.css">
+    <link rel="icon" href="./image/SAB Logo-03.png">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
         body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: linear-gradient(135deg, #B2F6FD 0%, #B2F6FD 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Kanit', sans-serif;
         }
         .header {
             text-align: center;
             margin-bottom: 20px;
-            color: #fff;
+            color: black;
             animation: fadeIn 2s ease-in-out;
         }
         .header h2 {
@@ -85,15 +89,6 @@
         .login-container .form-footer a:hover {
             text-decoration: underline;
         }
-        footer {
-            background-color: #6a11cb;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-        }
     </style>
 </head>
 <body>
@@ -107,19 +102,18 @@
     <form action="login.php" method="post">
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required >
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Login</button>
     </form>
 </div>
-
-<footer>
-    &copy; 2024 SUB IT Team. All rights reserved.
-</footer>
+<?php
+    require('./footer/footer.php');
+?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
