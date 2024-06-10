@@ -14,10 +14,17 @@ body {
     flex: 1;
 }
 
+/* เพิ่มใน footer.css */
+@keyframes fadeInFooter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 footer {
     padding: 20px 0;
     text-align: center;
     width: 100%;
+    animation: fadeInFooter 2s ease-in-out;
 }
 
 #footer-text {
@@ -25,3 +32,4 @@ footer {
     font-weight: bold;
     margin-right: 5px;
 }
+
