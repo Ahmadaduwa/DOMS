@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-// ตรวจสอบว่ามี session หรือไม่ และว่า 'number' มากกว่า 7 หรือไม่
-if (!isset($_SESSION['number']) || $_SESSION['number'] <= 7) {
-    // ถ้าไม่มี session หรือ 'number' มากกว่าหรือเท่ากับ 7 ให้ redirect ไปหน้า login
+// ตรวจสอบว่ามี session หรือไม่ และว่า 'number' อยู่ในช่วง 2 ถึง 7 หรือไม่
+if (!isset($_SESSION['number']) || ($_SESSION['number'] < 2 || $_SESSION['number'] > 7)) {
+    // ถ้าไม่มี session หรือ 'number' ไม่อยู่ในช่วง 2 ถึง 7 ให้ redirect ไปหน้า login
     header("Location: index.php");
     exit();
 }
@@ -73,7 +73,7 @@ if (!isset($_SESSION['number']) || $_SESSION['number'] <= 7) {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">E-Doms</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,28 +134,9 @@ if (!isset($_SESSION['number']) || $_SESSION['number'] <= 7) {
                             <input type="text" class="form-control" id="editTitle" name="title" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editMain" class="form-label">Main side</label>
-                            <select id="editMain" name="main" class="form-select">
-                                <option>-</option>
-                                <option>ความกตัญญู</option>
-                                <option>การรู้วินัย</option>
-                                <option>การมีใจอาสา</option>
-                                <option>การพัฒนาภาวะผู้นำ</option>
-                                <option>ความรักชาติ</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editStartDate" class="form-label">Start Date</label>
-                            <input type="date" class="form-control" id="editStartDate" name="start_date" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editEndDate" class="form-label">End Date</label>
-                            <input type="date" class="form-control" id="editEndDate" name="end_date" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="editAcademicYear" class="form-label">Academic Year</label>
                             <select id="editAcademicYear" name="academic_year" class="form-select">
-                                <option>-</option>
+                                <option value="" disabled selected hidden>ปีการศึกษา</option>
                                 <option>2024</option>
                                 <option>2025</option>
                                 <option>2026</option>
@@ -166,10 +147,10 @@ if (!isset($_SESSION['number']) || $_SESSION['number'] <= 7) {
                         <div class="mb-3">
                             <label for="editTerm" class="form-label">Term</label>
                             <select id="editTerm" name="term" class="form-select">
-                                <option>-</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>summer</option>
+                                <option value="" disabled selected hidden>เทอม</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="summer">summer</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -221,7 +202,6 @@ if (!isset($_SESSION['number']) || $_SESSION['number'] <= 7) {
     <div class="footer" style="position: fixed; bottom: 0; right: 0; left: 0; background-color: transparent;">
         <p style="color: black; text-align: right; margin-right: 10px; font-size: 14px; font-family: Arial, sans-serif;">&copy; 2024 SUB IT Team. All rights reserved.</p>
     </div>
-
 </body>
 <footer>
     <!-- Include jQuery -->

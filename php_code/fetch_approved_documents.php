@@ -66,8 +66,11 @@ if (isset($_POST['cardId'])) {
     }
 
     if (isset($_SESSION['number'])) {
-        $sql = "SELECT * FROM documents WHERE returned = 0 AND at_who = 0";
+        $userNumber = $_SESSION['number'];
+
+        $sql = "SELECT d.*, u.name AS owner_name FROM documents d JOIN users u ON d.owner = u.number WHERE d.returned = 0 AND d.at_who = 0";
         $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $userNumber);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -80,17 +83,16 @@ if (isset($_POST['cardId'])) {
                 echo "<div class='card mb-3' data-id='" . $documentId . "'>";
                 echo "<div class='card-body d-flex'>";
                 echo "<div class='card-details' style='flex: 1;'>";
-                echo "<h5 class='card-title'>" . $row['title'] . "</h5>";
+                echo "<h5 class='card-title'>" . htmlspecialchars($row['title']) . "</h5>";
                 echo "<div class='additional-info' style='display: none;'>";
                 echo "<div class='cont'>";
                 echo "<div class='left'>";
-                echo "<p class='card-text'><strong>Main side:</strong> " . htmlspecialchars($row['main']) . "</p>";
-                echo "<p class='card-text'><strong>From:</strong> " . $row['start_date'] . " <strong>To:</strong> " . $row['end_date'] . "</p>";
-                echo "<p class='card-text'><strong>Academic Year:</strong> " . $row['academic_year'] . " <strong>Term:</strong> " . $row['term'] . "</p>";
-                echo "<p class='card-text'><strong>Description:</strong> " . $row['description'] . "</p>";
-                echo "<p class='card-text'><strong>Capacity:</strong> " . $row['capacity'] . " people</p>";
-                echo "<p class='card-text'><strong>Responsible:</strong> " . $row['responsible'] . " <strong>Phone:</strong> " . $row['phone'] . "</p>";
-
+                echo "<p class='card-text'><strong>Submitter:</strong> " . htmlspecialchars($row['owner_name']) . "</p>";
+                echo "<p class='card-text'><strong>Date:</strong> " . htmlspecialchars($row['date']) . "</p>";
+                echo "<p class='card-text'><strong>Academic Year:</strong> " . htmlspecialchars($row['academic_year']) . " <strong>Term:</strong> " . htmlspecialchars($row['term']) . "</p>";
+                echo "<p class='card-text'><strong>Description:</strong> " . htmlspecialchars($row['description']) . "</p>";
+                echo "<p class='card-text'><strong>Capacity:</strong> " . htmlspecialchars($row['capacity']) . " people</p>";
+                echo "<p class='card-text'><strong>Responsible:</strong> " . htmlspecialchars($row['responsible']) . " <strong>Phone:</strong> " . htmlspecialchars($row['phone']) . "</p>";
                 if (count($files) > 0) {
                     echo "<p class='card-text'><strong>Files:</strong><br>";
                     foreach ($files as $file) {

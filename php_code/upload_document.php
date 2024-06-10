@@ -59,7 +59,9 @@ foreach ($_FILES['files']['name'] as $key => $name) {
 if ($uploadOk == 1 && !empty($file_paths)) {
     // Save the form data to the database
     $title = $_POST['title'];
-    $date = date("Y-m-d H:i:s"); // Current date and time
+    $dateTest = date("d-m-Y"); // Current date in dd/mm/yyyy format
+    $time = date("h:i a"); // Current time in 12-hour format with am/pm
+    $date = $dateTest . '  ' . $time;
     $academic_year = $_POST['academic_year'];
     $term = $_POST['term'];
     $description = $_POST['description'];

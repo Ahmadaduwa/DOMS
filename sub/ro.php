@@ -137,28 +137,9 @@ if (!isset($_SESSION['number']) || ($_SESSION['number'] < 2 || $_SESSION['number
                             <input type="text" class="form-control" id="editTitle" name="title" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editMain" class="form-label">Main side</label>
-                            <select id="editMain" name="main" class="form-select">
-                                <option>-</option>
-                                <option>ความกตัญญู</option>
-                                <option>การรู้วินัย</option>
-                                <option>การมีใจอาสา</option>
-                                <option>การพัฒนาภาวะผู้นำ</option>
-                                <option>ความรักชาติ</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editStartDate" class="form-label">Start Date</label>
-                            <input type="date" class="form-control" id="editStartDate" name="start_date" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editEndDate" class="form-label">End Date</label>
-                            <input type="date" class="form-control" id="editEndDate" name="end_date" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="editAcademicYear" class="form-label">Academic Year</label>
                             <select id="editAcademicYear" name="academic_year" class="form-select">
-                                <option>-</option>
+                                <option value="" disabled selected hidden>ปีการศึกษา</option>
                                 <option>2024</option>
                                 <option>2025</option>
                                 <option>2026</option>
@@ -169,10 +150,10 @@ if (!isset($_SESSION['number']) || ($_SESSION['number'] < 2 || $_SESSION['number
                         <div class="mb-3">
                             <label for="editTerm" class="form-label">Term</label>
                             <select id="editTerm" name="term" class="form-select">
-                                <option>-</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>summer</option>
+                                <option value="" disabled selected hidden>เทอม</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="summer">summer</option>
                             </select>
                         </div>
                         <div class="mb-3">

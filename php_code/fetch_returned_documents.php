@@ -1,7 +1,7 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) { // Ensure session is started
-    session_start(); 
-} 
+    session_start();
+}
 
 // Database connection
 require('dbconnect.php');
@@ -61,7 +61,6 @@ if (isset($_POST['cardId'])) {
     } else {
         echo "No files found for this document.";
     }
-
 } else {
     // Fetch returned documents specific to the logged-in user
     if (session_status() === PHP_SESSION_NONE) {
@@ -70,8 +69,7 @@ if (isset($_POST['cardId'])) {
 
     if (isset($_SESSION['number'])) {
         $userNumber = $_SESSION['number'];
-
-        $sql = "SELECT * FROM documents WHERE returned = 1 AND at_who = ?";
+        $sql = "SELECT d.*, u.name AS owner_name FROM documents d JOIN users u ON d.owner = u.number WHERE d.returned = 1 AND d.at_who = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $userNumber);
         $stmt->execute();
@@ -84,59 +82,57 @@ if (isset($_POST['cardId'])) {
                 $comments = fetchComments($conn, $documentId);
 
                 echo "<div class='card mb-3' data-id='" . $documentId . "'>";
-                    echo "<div class='card-body d-flex'>";
-                        echo "<div class='card-details' style='flex: 1;'>";
-                            echo "<h5 class='card-title'>" . $row['title'] . "</h5>";
-                            echo "<div class='additional-info' style='display: none;'>";
-                            echo "<div class='cont'>";
-                                echo "<div class='left'>";
-                                    echo "<p class='card-text'><strong>Main side:</strong> " . htmlspecialchars($row['main']) . "</p>";
-                                    echo "<p class='card-text'><strong>From:</strong> " . $row['start_date'] . " <strong>To:</strong> " . $row['end_date'] . "</p>";
-                                    echo "<p class='card-text'><strong>Academic Year:</strong> " . $row['academic_year'] . " <strong>Term:</strong> " . $row['term'] . "</p>";
-                                    echo "<p class='card-text'><strong>Description:</strong> " . $row['description'] . "</p>";
-                                    echo "<p class='card-text'><strong>Capacity:</strong> " . $row['capacity'] . " people</p>";
-                                    echo "<p class='card-text'><strong>Responsible:</strong> " . $row['responsible'] . " <strong>Phone:</strong> " . $row['phone'] . "</p>";
-                
-                                    // Display associated files
-                                    if (count($files) > 0) {
-                                        echo "<p class='card-text'><strong>Files:</strong><br>";
-                                        foreach ($files as $file) {
-                                            echo "<a href='" . $file . "' target='_blank'>" . basename($file) . "</a><br>";
-                                        }
-                                        echo "</p>";
-                                    } else {
-                                        echo "<p class='card-text'>No files found for this document.</p>";
-                                    }
-                                echo "</div>";
-                                echo "<div class='card-comments right'>";
-                                    if (count($comments) > 0) {
-                                        echo "<p class='card-text'><strong>Comments:</strong><br>";
-                                        foreach ($comments as $comment) {
-                                            echo "<p><strong>Date:</strong> " . htmlspecialchars($comment['date']) . "<br>" . htmlspecialchars($comment['comment']) . "</p>";
-                                        }
-                                        echo "</p>";
-                                    } else {
-                                        echo "<p class='card-text'>No comments found for this document.</p>";
-                                    }
-                                echo "</div>";
-                            echo "</div>";
-                            echo "</div>"; // Close additional-info div
-                            echo "<button class='btn btn-sm btn-secondary view-more-btn mt-2'>ดูเพิ่มเติม</button>";
-                            echo "<button type='button' class='btn btn-sm btn-info edit-btn mt-2'>แก้ไข</button>"; 
-                            echo "<button type='button' class='btn btn-sm btn-success submit-btn mt-2'>ยืนยัน</button>";
-                            echo "<button type='button' class='btn btn-sm btn-danger delete-btn mt-2'>ลบโครงการ</button>";
-                        echo "</div>"; // Close card-details div
-                    echo "</div>"; // Close card-body div
+                echo "<div class='card-body d-flex'>";
+                echo "<div class='card-details' style='flex: 1;'>";
+                echo "<h5 class='card-title'>" . htmlspecialchars($row['title']) . "</h5>";
+                echo "<div class='additional-info' style='display: none;'>";
+                echo "<div class='cont'>";
+                echo "<div class='left'>";
+                echo "<p class='card-text'><strong>Submitter:</strong> " . htmlspecialchars($row['owner_name']) . "</p>";
+                echo "<p class='card-text'><strong>Date:</strong> " . htmlspecialchars($row['date']) . "</p>";
+                echo "<p class='card-text'><strong>Academic Year:</strong> " . htmlspecialchars($row['academic_year']) . " <strong>Term:</strong> " . htmlspecialchars($row['term']) . "</p>";
+                echo "<p class='card-text'><strong>Description:</strong> " . htmlspecialchars($row['description']) . "</p>";
+                echo "<p class='card-text'><strong>Capacity:</strong> " . htmlspecialchars($row['capacity']) . " people</p>";
+                echo "<p class='card-text'><strong>Responsible:</strong> " . htmlspecialchars($row['responsible']) . " <strong>Phone:</strong> " . htmlspecialchars($row['phone']) . "</p>";
+                if (count($files) > 0) {
+                    echo "<p class='card-text'><strong>Files:</strong><br>";
+                    foreach ($files as $file) {
+                        echo "<a href='" . $file . "' target='_blank'>" . basename($file) . "</a><br>";
+                    }
+                    echo "</p>";
+                } else {
+                    echo "<p class='card-text'>No files found for this document.</p>";
+                }
+                echo "</div>";
+                echo "<div class='card-comments right'>";
+                if (count($comments) > 0) {
+                    echo "<p class='card-text'><strong>Comments:</strong><br>";
+                    foreach ($comments as $comment) {
+                        echo "<p><strong>Date:</strong> " . htmlspecialchars($comment['date']) . "<br>" . htmlspecialchars($comment['comment']) . "</p>";
+                    }
+                    echo "</p>";
+                } else {
+                    echo "<p class='card-text'>No comments found for this document.</p>";
+                }
+                echo "</div>";
+                echo "</div>";
+                echo "</div>"; // Close additional-info div
+                echo "<button class='btn btn-sm btn-secondary view-more-btn mt-2'>ดูเพิ่มเติม</button>";
+                echo "<button type='button' class='btn btn-sm btn-info edit-btn mt-2'>แก้ไข</button>";
+                echo "<button type='button' class='btn btn-sm btn-success submit-btn mt-2'>ยืนยัน</button>";
+                echo "<button type='button' class='btn btn-sm btn-danger delete-btn mt-2'>ลบโครงการ</button>";
+                echo "</div>"; // Close card-details div
+                echo "</div>"; // Close card-body div
                 echo "</div>"; // Close card div
             }
         } else {
             echo "<div class='alert alert-warning' role='alert'>No documents found.</div>";
         }
 
-
+        $stmt->close();
     } else {
         echo "<div class='alert alert-danger' role='alert'>User is not logged in.</div>";
     }
-
+    $conn->close();
 }
 ?>
