@@ -36,7 +36,7 @@ if ($result->num_rows > 0) {
         } elseif ($user['number'] == 1) {
             header("Location: ./ohm/home.php");
         } elseif ($user['number'] == 0) {
-            header("Location: ./../other_page/admin.php");
+            header("Location: ./admin/admin_main.php");
         }
         exit;
     } else {
