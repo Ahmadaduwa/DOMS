@@ -112,18 +112,7 @@ if (!isset($_SESSION['number']) || ($_SESSION['number'] < 2 || $_SESSION['number
             <form id="uploadForm" action="./../php_code/upload_document.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" name="title" maxlength="150" required>
-                </div>
-                <div class="form-group">
-                    <label for="main" class="form-label">Main side</label>
-                    <select id="main" name="main" class="form-select">
-                        <option>-</option>
-                        <option>ความกตัญญู</option>
-                        <option>การรู้วินัย</option>
-                        <option>การมีใจอาสา</option>
-                        <option>การพัฒนาภาวะผู้นำ</option>
-                        <option>ความรักชาติ</option>
-                    </select>
+                    <input type="text" class="form-control" id="title" name="title" maxlength="150" required required placeholder="หัวข้อโครงการ">
                 </div>
                 <div class="form-group">
                     <label for="start_date">From Date</label>
