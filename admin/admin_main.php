@@ -89,7 +89,7 @@ if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
                             $stmt->close();
 
                             foreach ($files as $file) {
-                                echo htmlspecialchars($file['file_path']) . '<br>';
+                                echo "<a href='" . $file . "' target='_blank'>" . basename($file) . "</a><br>";
                             }
                             ?>
                         </td>
