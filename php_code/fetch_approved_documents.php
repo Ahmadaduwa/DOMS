@@ -61,18 +61,12 @@ if (isset($_POST['cardId'])) {
     }
 } else {
     // Fetch returned documents specific to the logged-in user
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-
     if (isset($_SESSION['number'])) {
         $userNumber = $_SESSION['number'];
 
+        // Use a direct query without parameters as there are no dynamic parts in the query
         $sql = "SELECT d.*, u.name AS owner_name FROM documents d JOIN users u ON d.owner = u.number WHERE d.returned = 0 AND d.at_who = 0";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('s', $userNumber);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -125,8 +119,6 @@ if (isset($_POST['cardId'])) {
         } else {
             echo "<div class='alert alert-warning' role='alert'>No documents found.</div>";
         }
-
-        $stmt->close();
     } else {
         echo "<div class='alert alert-danger' role='alert'>User is not logged in.</div>";
     }
