@@ -43,7 +43,7 @@
         }
         .login-container {
             width: 100%;
-            max-width: 400px;
+            max-width: 600px;
             padding: 30px;
             background: white;
             border-radius: 15px;
@@ -94,6 +94,7 @@
 <body>
 
 <div class="header">
+    <img src="./image/SAB Logo-03.png" alt="SAB Logo" width="100px">
     <h2>Welcome to E-doms</h2>
     <p>Your document management solution</p>
 </div>
