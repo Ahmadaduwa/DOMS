@@ -1,9 +1,6 @@
 <?php
     require('helper/check_sub.php');
 
-    //test comit
-    //commit
-    // hjgjghjfghfgh
 ?>
 <!DOCTYPE html>
 <html lang="en">
