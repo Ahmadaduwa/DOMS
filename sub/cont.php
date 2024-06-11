@@ -1,5 +1,5 @@
-<?php 
-    require('helper/check.php');
+<?php
+    require('helper/check_sub.php');
 ?>
 
 <!DOCTYPE html>

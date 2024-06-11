@@ -12,39 +12,41 @@ if ($conn->connect_error) {
 }
 
 // Function to fetch comments
-function fetchComments($conn, $documentId)
-{
-    $comments = [];
-    $sql_comments = "SELECT date, comment FROM comments WHERE document_id = ?";
-    $stmt_comments = $conn->prepare($sql_comments);
-    $stmt_comments->bind_param('i', $documentId);
-    $stmt_comments->execute();
-    $result_comments = $stmt_comments->get_result();
+if (!function_exists('fetchComments')) {
+    function fetchComments($conn, $documentId) {
+        $comments = [];
+        $sql_comments = "SELECT date, comment FROM comments WHERE document_id = ?";
+        $stmt_comments = $conn->prepare($sql_comments);
+        $stmt_comments->bind_param('i', $documentId);
+        $stmt_comments->execute();
+        $result_comments = $stmt_comments->get_result();
 
-    while ($row_comment = $result_comments->fetch_assoc()) {
-        $comments[] = $row_comment;
+        while ($row_comment = $result_comments->fetch_assoc()) {
+            $comments[] = $row_comment;
+        }
+
+        $stmt_comments->close();
+        return $comments;
     }
-
-    $stmt_comments->close();
-    return $comments;
 }
 
 // Function to fetch files
-function fetchFiles($conn, $documentId)
-{
-    $files = [];
-    $sql_files = "SELECT file_path FROM files WHERE document_id = ?";
-    $stmt_files = $conn->prepare($sql_files);
-    $stmt_files->bind_param('i', $documentId);
-    $stmt_files->execute();
-    $result_files = $stmt_files->get_result();
+if (!function_exists('fetchFiles')) {
+    function fetchFiles($conn, $documentId) {
+        $files = [];
+        $sql_files = "SELECT file_path FROM files WHERE document_id = ?";
+        $stmt_files = $conn->prepare($sql_files);
+        $stmt_files->bind_param('i', $documentId);
+        $stmt_files->execute();
+        $result_files = $stmt_files->get_result();
 
-    while ($row_file = $result_files->fetch_assoc()) {
-        $files[] = $row_file['file_path'];
+        while ($row_file = $result_files->fetch_assoc()) {
+            $files[] = $row_file['file_path'];
+        }
+
+        $stmt_files->close();
+        return $files;
     }
-
-    $stmt_files->close();
-    return $files;
 }
 
 // Check if the request is an AJAX request to fetch files
@@ -67,12 +69,11 @@ if (isset($_POST['cardId'])) {
 
     if (isset($_SESSION['number'])) {
         $userNumber = $_SESSION['number'];
-
         $sql = "SELECT * FROM documents WHERE returned = 0 AND at_who = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $userNumber);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $result = $stmt->get_result();  
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -83,17 +84,16 @@ if (isset($_POST['cardId'])) {
                 echo "<div class='card mb-3' data-id='" . $documentId . "'>";
                 echo "<div class='card-body d-flex'>";
                 echo "<div class='card-details' style='flex: 1;'>";
-                echo "<h5 class='card-title'>" . $row['title'] . "</h5>";
+                echo "<h5 class='card-title'>" . htmlspecialchars($row['title']) . "</h5>";
                 echo "<div class='additional-info' style='display: none;'>";
                 echo "<div class='cont'>";
                 echo "<div class='left'>";
-                echo "<p class='card-text'><strong>Main side:</strong> " . htmlspecialchars($row['main']) . "</p>";
-                echo "<p class='card-text'><strong>From:</strong> " . $row['start_date'] . " <strong>To:</strong> " . $row['end_date'] . "</p>";
-                echo "<p class='card-text'><strong>Academic Year:</strong> " . $row['academic_year'] . " <strong>Term:</strong> " . $row['term'] . "</p>";
-                echo "<p class='card-text'><strong>Description:</strong> " . $row['description'] . "</p>";
-                echo "<p class='card-text'><strong>Capacity:</strong> " . $row['capacity'] . " people</p>";
-                echo "<p class='card-text'><strong>Responsible:</strong> " . $row['responsible'] . " <strong>Phone:</strong> " . $row['phone'] . "</p>";
-
+                echo "<p class='card-text'><strong>Submitter:</strong> " . htmlspecialchars($row['owner_name']) . "</p>";
+                echo "<p class='card-text'><strong>Date:</strong> " . htmlspecialchars($row['date']) . "</p>";
+                echo "<p class='card-text'><strong>Academic Year:</strong> " . htmlspecialchars($row['academic_year']) . " <strong>Term:</strong> " . htmlspecialchars($row['term']) . "</p>";
+                echo "<p class='card-text'><strong>Description:</strong> " . htmlspecialchars($row['description']) . "</p>";
+                echo "<p class='card-text'><strong>Capacity:</strong> " . htmlspecialchars($row['capacity']) . " people</p>";
+                echo "<p class='card-text'><strong>Responsible:</strong> " . htmlspecialchars($row['responsible']) . " <strong>Phone:</strong> " . htmlspecialchars($row['phone']) . "</p>";
                 if (count($files) > 0) {
                     echo "<p class='card-text'><strong>Files:</strong><br>";
                     foreach ($files as $file) {

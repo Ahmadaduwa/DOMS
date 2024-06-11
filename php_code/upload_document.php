@@ -14,6 +14,7 @@ if (!is_dir($target_dir)) {
 
 foreach ($_FILES['files']['name'] as $key => $name) {
     $fileType = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+    $uploadOk = 1; // Reset uploadOk for each file
 
     // Check file size
     if ($_FILES["files"]["size"][$key] > 5000000) {
@@ -58,8 +59,9 @@ foreach ($_FILES['files']['name'] as $key => $name) {
 if ($uploadOk == 1 && !empty($file_paths)) {
     // Save the form data to the database
     $title = $_POST['title'];
-    $start_date = $_POST['start_date'];
-    $end_date = $_POST['end_date'];
+    $dateTest = date("d-m-Y"); // Current date in dd/mm/yyyy format
+    $time = date("h:i a"); // Current time in 12-hour format with am/pm
+    $date = $dateTest . '  ' . $time;
     $academic_year = $_POST['academic_year'];
     $term = $_POST['term'];
     $description = $_POST['description'];
@@ -78,13 +80,13 @@ if ($uploadOk == 1 && !empty($file_paths)) {
     if ($conn->connect_error) {
         $messages[] = "Connection failed: " . $conn->connect_error;
     } else {
-        $stmt = $conn->prepare("INSERT INTO documents (title, start_date, end_date, academic_year, term, description, capacity, responsible, phone, level, owner, at_who, returned) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssisssssi", $title, $start_date, $end_date, $academic_year, $term, $description, $capacity, $responsible, $phone, $level, $owner, $at_who, $returned);
+        $stmt = $conn->prepare("INSERT INTO documents (title, date, academic_year, term, description, capacity, responsible, phone, level, owner, at_who, returned) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssssisiss", $title, $date, $academic_year, $term, $description, $capacity, $responsible, $phone, $level, $owner, $at_who, $returned);
 
         if ($stmt->execute()) {
             $document_id = $stmt->insert_id; // Store the ID of the newly added document
             $messages[] = "The files have been uploaded and form data saved.";
-        
+
             // Insert file paths into the files table
             foreach ($file_paths as $file_path) {
                 $stmt_files = $conn->prepare("INSERT INTO files (document_id, file_path) VALUES (?, ?)");
