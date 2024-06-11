@@ -1,7 +1,6 @@
 <?php
-    require('helper/check.php');
+    require('helper/check_sub.php');
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

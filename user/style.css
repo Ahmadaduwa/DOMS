@@ -41,14 +41,14 @@ body {
     margin-right: 20px;
 }
 
+.card-comments {
+    border-left: 1px solid #ddd;
+    padding-left: 20px;
+}
+
 .cont{
     display: flex;
     justify-content: space-between;
-}
-
-#commentText {
-    min-height: 300px; 
-    resize: vertical; 
 }
 
 .left {
@@ -59,9 +59,9 @@ body {
     width: 50%;
 }
 
-.card-comments {
-    border-left: 20px solid #ddd;
-    padding-left: 20px;
+#commentText {
+    min-height: 300px; 
+    resize: vertical; 
 }
 
 @media only screen and (max-width: 767px) {
