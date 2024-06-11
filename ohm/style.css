@@ -72,5 +72,10 @@ body {
     .card-comments {
         border-left: 0px solid #ddd;
         padding-left: 0px;
+        padding-top: 20px;
+    }
+
+    .cont{
+        display: none;
     }
 }

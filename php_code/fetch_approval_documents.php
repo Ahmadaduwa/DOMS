@@ -69,7 +69,7 @@ if (isset($_POST['cardId'])) {
 
     if (isset($_SESSION['number'])) {
         $userNumber = $_SESSION['number'];
-        $sql = "SELECT * FROM documents WHERE returned = 0 AND at_who = ?";
+        $sql = "SELECT d.*, u.name AS owner_name FROM documents d JOIN users u ON d.owner = u.number WHERE d.returned = 0 AND d.at_who = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $userNumber);
         $stmt->execute();
