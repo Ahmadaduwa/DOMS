@@ -3,7 +3,6 @@ html, body {
     margin: 0;
 }
 
-
 body {
     display: flex;
     flex-direction: column;
@@ -14,22 +13,14 @@ body {
     flex: 1;
 }
 
-/* เพิ่มใน footer.css */
-@keyframes fadeInFooter {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
 footer {
-    padding: 20px 0;
     text-align: center;
     width: 100%;
+    margin-top: auto;
     animation: fadeInFooter 2s ease-in-out;
 }
 
 #footer-text {
     font-size: 14px;
     font-weight: bold;
-    margin-right: 5px;
 }
-

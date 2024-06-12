@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>หน้าแรก - เว็ปไซต์ส่งเอกสาร</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./footer/footer.css">
+    <link rel="stylesheet" href="./components/footerlogin/footer.css">
     <link rel="icon" href="./image/SAB Logo-03.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
 
         body {
-            background: linear-gradient(135deg, #B2F6FD 0%, #B2F6FD 100%);
+            background: linear-gradient(135deg, #790D7B 0%, #790D7B 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -23,7 +23,7 @@
         .header {
             text-align: center;
             margin-bottom: 20px;
-            color: black;
+            color: white;
             animation: fadeIn 2s ease-in-out;
         }
         .header h2 {
@@ -89,13 +89,19 @@
         .login-container .form-footer a:hover {
             text-decoration: underline;
         }
+        footer {
+            color: white;
+        }
+        .gold-text {
+            color: gold;
+        }
     </style>
 </head>
 <body>
 
 <div class="header">
     <img src="./image/SAB Logo-03.png" alt="SAB Logo" width="100px">
-    <h2>Welcome to E-doms</h2>
+    <h2 class="gold-text">Welcome to E-doms</h2>
     <p>Your document management solution</p>
 </div>
 <div class="login-container">
@@ -113,7 +119,7 @@
     </form>
 </div>
 <?php
-    require('./footer/footer.php');
+    require('./components/footerlogin/footer.php');
 ?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
