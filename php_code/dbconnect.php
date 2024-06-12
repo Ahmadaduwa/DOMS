@@ -7,8 +7,8 @@
 
 $servername = "localhost";
 $username = 'root';
-$password = 'your_password ';
-$dbname = 'mydata';
+$password = '123456';
+$dbname = 'doms';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

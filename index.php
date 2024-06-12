@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>หน้าแรก - เว็ปไซต์ส่งเอกสาร</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./footer/footer.css">
+    <link rel="stylesheet" href="./components/footerlogin/footer.css">
     <link rel="icon" href="./image/SAB Logo-03.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
@@ -119,7 +119,7 @@
     </form>
 </div>
 <?php
-    require('./footer/footer.php');
+    require('./components/footerlogin/footer.php');
 ?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
