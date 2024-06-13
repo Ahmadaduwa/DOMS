@@ -60,7 +60,11 @@ if (isset($_POST['cardId'])) {
         echo "No files found for this document.";
     }
 } else {
+<<<<<<< HEAD
 
+=======
+    // Fetch returned documents specific to the logged-in user
+>>>>>>> main
     if (isset($_SESSION['number'])) {
         $userNumber = $_SESSION['number'];
 

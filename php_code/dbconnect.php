@@ -6,7 +6,7 @@
 
 $servername = "localhost";
 $username = 'root';
-$password = 'vA-Me.@2686019363&NW';
+$password = '123456';
 $dbname = 'doms';
 
 // Create connection

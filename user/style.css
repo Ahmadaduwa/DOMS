@@ -1,18 +1,28 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa;
+    background-color: white;
 }
 .navbar {
-    background: linear-gradient(to right, #6a11cb, #2575fc);
+    background: #790D7B
+}
+.navbar-brand {
+    font-size: 1.5em;
+    font-weight: bold;
 }
 .navbar-brand, .nav-link, .navbar-text {
-    color: #fff !important;
+    color: gold !important;
+    font-weight: bold;
 }
+.navbar-brandimg {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}  
 .container {
     margin-top: 20px;
 }
 .btn-primary {
-    background: #6a11cb;
+    background: #790D7B;
     border: none;
 }
 .btn-primary:hover {

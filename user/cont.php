@@ -13,16 +13,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Include SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="icon" href="../image/SAB Logo-03.png">
     <link rel="stylesheet" href="./style.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
             padding-top: 45px;
-        }
-
-        .navbar {
-            background-color: #007bff;
         }
 
         .navbar-brand {
@@ -91,6 +87,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
+        <img src="../image/SAB Logo-03.png" alt="SAB Photo" class="navbar-brandimg" >
             <a class="navbar-brand" href="#">E-Doms</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -122,7 +119,7 @@
         <div id="contactForms" class="section active">
             <h2 class="text-center">Contact</h2>
             <div class="team-info text-center">
-                <h3>SUB IT 2024 Team</h3>
+                <h3>SAB IT 2024 Team</h3>
                 <p>Meet the amazing team behind this website:</p>
                 <div class="team-members">
                     <div class="member">
@@ -161,9 +158,9 @@
         </div>
     </div>
 
-    <footer class="footer">
+    <!-- <footer class="footer">
         <span>&copy; 2024 SUB IT Team. All rights reserved.</span>
-    </footer>
+    </footer> -->
 
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

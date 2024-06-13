@@ -142,4 +142,8 @@ if (isset($_POST['cardId'])) {
         echo "<div class='alert alert-danger' role='alert'>User is not logged in.</div>";
     }
     $conn->close();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
