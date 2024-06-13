@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าแรก - เว็ปไซต์ส่งเอกสาร</title>
+    <title>Login - เว็ปไซต์ส่งเอกสาร</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./components/footerlogin/footer.css">
     <link rel="icon" href="./image/SAB Logo-03.png">
