@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 function fetchComments($conn, $documentId)
 {
     $comments = [];
-    $sql_comments = "SELECT date, comment FROM comments WHERE document_id = ?";
+    $sql_comments = "SELECT date, comment, `from` FROM comments WHERE document_id = ?";
     $stmt_comments = $conn->prepare($sql_comments);
     $stmt_comments->bind_param('i', $documentId);
     $stmt_comments->execute();
@@ -107,7 +107,9 @@ if (isset($_POST['cardId'])) {
                 if (count($comments) > 0) {
                     echo "<p class='card-text'><strong>Comments:</strong><br>";
                     foreach ($comments as $comment) {
-                        echo "<p><strong>Date:</strong> " . htmlspecialchars($comment['date']) . "<br>" . htmlspecialchars($comment['comment']) . "</p>";
+                        echo "<p><strong>Date:</strong> " . htmlspecialchars($comment['date']) . "<br>";
+                        echo "<strong>From:</strong> " . htmlspecialchars($comment['from']) . "<br>";
+                        echo htmlspecialchars($comment['comment']) . "</p>";
                     }
                     echo "</p>";
                 } else {

@@ -5,14 +5,20 @@ require('dbconnect.php');
 header('Content-Type: application/json');
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error]));
 }
 
-if (isset($_POST['documentId']) && isset($_POST['userNumber']) && !empty($_POST['documentId']) && !empty($_POST['userNumber'])) {
+if (isset($_POST['documentId']) && !empty($_POST['documentId']) && isset($_POST['userNumber']) && !empty($_POST['userNumber'])) {
     $documentId = intval($_POST['documentId']);
     $userNumber = intval($_POST['userNumber']);
 
-    $sql = "UPDATE documents SET returned = 1, at_who = ? WHERE id = ?";
+    // ตรวจสอบการมีอยู่ของ $_SESSION['number']
+    if (!isset($_SESSION['number'])) {
+        echo json_encode(['error' => 'Session number is not set', 'session' => $_SESSION, 'post' => $_POST]);
+        exit();
+    }
+
+    // ดึงข้อมูล title จาก documents
     $sql_get_title = "SELECT title FROM documents WHERE id = ?";
     $stmt_get_title = $conn->prepare($sql_get_title);
     $stmt_get_title->bind_param('i', $documentId);
@@ -20,11 +26,14 @@ if (isset($_POST['documentId']) && isset($_POST['userNumber']) && !empty($_POST[
     $stmt_get_title->bind_result($projectTitle);
     $stmt_get_title->fetch();
     $stmt_get_title->close();
+
+    // อัพเดท documents
+    $sql = "UPDATE documents SET returned = 1, at_who = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ii', $userNumber, $documentId); // Change parameter order
+    $stmt->bind_param('ii', $userNumber, $documentId);
 
     if ($stmt->execute()) {
-        // Send LINE Notify
+        // ส่ง LINE Notify
         $tokens = [
             7 => "HNt86ORGbL4bHRu80akhBzorWKeS32zt7Y4iJWLxZ3i",
             6 => "71w3kRItJbmAqB2BirV67gBG8j3zED8QkyXsXLYvgJi",
@@ -38,12 +47,16 @@ if (isset($_POST['documentId']) && isset($_POST['userNumber']) && !empty($_POST[
         if (array_key_exists($userNumber, $tokens)) {
             $sToken = $tokens[$userNumber];
             $message = "โครงการ \"$projectTitle\" ถูกตีกลับ";
-            sendLineNotify($sToken, $message);
+            $notifyResult = sendLineNotify($sToken, $message);
+
+            if ($notifyResult['success']) {
+                echo json_encode(['success' => true, 'notify' => $notifyResult]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Notification failed', 'notify' => $notifyResult]);
+            }
         } else {
             echo json_encode(['success' => false, 'error' => 'Token not found for user']);
         }
-
-        echo json_encode(['success' => true]);
     } else {
         echo json_encode(['success' => false, 'error' => $stmt->error]);
     }
@@ -63,7 +76,7 @@ function sendLineNotify($token, $message) {
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, "message=" . urlencode($message));
     
-    $headers = array('Content-type: application/x-www-form-urlencoded', 'Authorization: Bearer ' . $token,);
+    $headers = array('Content-type: application/x-www-form-urlencoded', 'Authorization: Bearer ' . $token);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 

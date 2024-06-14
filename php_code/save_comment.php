@@ -5,11 +5,12 @@ require('dbconnect.php');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $commentText = htmlspecialchars($_POST['commentText']);
     $documentId = intval($_POST['documentId']);
-    $date = date('Y-m-d H:i:s'); // Get the current date and time
+    $date = date('d-m-Y h:i a'); // Get the current date and time
+    $from = $_SESSION['name']; // Get the name of the user from session
 
     try {
-        $stmt = $conn->prepare("INSERT INTO comments (document_id, date, comment) VALUES (?, ?, ?)");
-        $stmt->bind_param("iss", $documentId, $date, $commentText);
+        $stmt = $conn->prepare("INSERT INTO comments (document_id, date, comment, `from`) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("isss", $documentId, $date, $commentText, $from);
 
         if ($stmt->execute()) {
             echo json_encode(['status' => 'success', 'message' => 'Comment saved successfully.']);

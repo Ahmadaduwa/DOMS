@@ -2,35 +2,44 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: white;
 }
+
 .navbar {
     background: #790D7B
 }
+
 .navbar-brand {
     font-size: 1.5em;
     font-weight: bold;
 }
+
 .navbar-brand, .nav-link, .navbar-text {
     color: gold !important;
     font-weight: bold;
 }
+
 .navbar-brandimg {
     width: 40px;
     height: 40px;
     margin-right: 10px;
 }  
+
 .container {
     margin-top: 20px;
 }
+
 .btn-primary {
     background: #790D7B;
     border: none;
 }
+
 .btn-primary:hover {
     background: #2575fc;
 }
+
 .section {
     display: none;
 }
+
 .section.active {
     display: block;
 }
@@ -76,16 +85,16 @@ body {
 
 @media only screen and (max-width: 767px) {
     .left, .right {
-        width: 100%;
+        width: 100%; /* ปรับให้ทั้งซ้ายและขวาแสดงเต็มความกว้าง */
     }
 
     .card-comments {
-        border-left: 0px solid #ddd;
-        padding-left: 0px;
-        padding-top: 20px;
+        border-left: none; /* ไม่ต้องแสดง border */
+        padding-left: 0;
+        padding-top: 16px;
     }
 
-    .cont{
-        display: none;
+    .cont {
+        flex-direction: column; /* ปรับทิศทางเป็นแนวตั้ง */
     }
 }

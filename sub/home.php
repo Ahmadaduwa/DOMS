@@ -1,5 +1,5 @@
 <?php
-    require('helper/check_sub.php');
+require('helper/check_sub.php');
 ?>
 
 <!DOCTYPE html>
@@ -62,9 +62,9 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-        <img src="../image/SAB Logo-03.png" alt="SAB Photo" class="navbar-brandimg" >
+            <img src="../image/SAB Logo-03.png" alt="SAB Photo" class="navbar-brandimg">
             <a class="navbar-brand" href="#">E-Doms</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -153,7 +153,7 @@
 
     <?php
     require('../components/footerhelper/footerpage.php');
-?>
+    ?>
 </body>
 <footer>
     <!-- Include jQuery -->
