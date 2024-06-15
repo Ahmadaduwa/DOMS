@@ -55,18 +55,19 @@ if (isset($data['id'])) {
 
         // Send notification
         $tokens = [
-            7 => "HNt86ORGbL4bHRu80akhBzorWKeS32zt7Y4iJWLxZ3i",
-            6 => "71w3kRItJbmAqB2BirV67gBG8j3zED8QkyXsXLYvgJi",
-            5 => "MlChvVq43qrGPmylD8wBqSAHcXIBQMROXbdwKWnrlTi",
-            4 => "LD0uGw9xxHwR2z6O6YYswbSLeXbrIw28UYBsmEiHXcl",
-            3 => "LFRmmw1Ylb76nmcisFw1ycFkdXc1BL6s5jJ47puF5mB",
-            2 => "RQkfLX3V2yW07T9xUUH2YwopN4LpR376mLwLTdFuPhy",
-            1 => "8DGBDmgd7DyOVJ5IlfsOpwgWggOxPeW33Pm2o3SDcy0"
+            7 => "Q5pzuPW8pXT7ONAjyOYE3bPH24i1l2mKWK8Fqx3PiRJ",
+            6 => "Mgh3wYjU11U8klMYRijZ4LxZprMufQQ8cTmcuMg6Xkh",
+            5 => "NgTP9Q6UOLdXRpyNeWEVZ2VGcJRowTPL42pXaarlxCf",
+            4 => "DT4Q5y5Y1htTzaOZGzMwZrm3qK9lBIItGoKdwOPfL9e",
+            3 => "809iDieyaz4TOEUqm0zTYt92fPBpAFaYfFcw7TIy4aq",
+            2 => "a0dUuzSHs1yY5Ps4uv4Xa7qrERWfziJ1Jp5WYgI90ja",
+            1 => "Td75qr7OXw2BoJp9n43kMwCEpdU6sD4vhYTowDq3Jhb"
         ];
 
         if (array_key_exists($level, $tokens)) {
             $sToken = $tokens[$level];
-            $message = "$ownerName ได้ยืนขออนุมัติโครงการ \"$title\"";
+            $currentDate = date("d/m/Y");
+            $message = "ID: $documentId\nขออนุมัติโครงการ \"$title\"\nผู้ยื่นโครงการ: $ownerName\nวันที่ทำรายการ: $currentDate";
             $notifyResult = sendLineNotify($sToken, $message);
         
             // ตรวจสอบผลลัพธ์จากการแจ้งเตือน LINE Notify

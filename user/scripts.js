@@ -225,7 +225,7 @@ $(document).ready(function () {
             cancelButtonText: "ยกเลิก",
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch("./../php_code/submit_document.php", {
+                fetch("./../php_code/submit_document_user.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

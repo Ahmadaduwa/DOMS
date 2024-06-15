@@ -37,12 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // ตรวจสอบค่า level และกำหนด token ที่เหมาะสม
     $tokens = [
-        7 => "71w3kRItJbmAqB2BirV67gBG8j3zED8QkyXsXLYvgJi",
-        6 => "MlChvVq43qrGPmylD8wBqSAHcXIBQMROXbdwKWnrlTi",
-        5 => "LD0uGw9xxHwR2z6O6YYswbSLeXbrIw28UYBsmEiHXcl",
-        4 => "LFRmmw1Ylb76nmcisFw1ycFkdXc1BL6s5jJ47puF5mB",
-        3 => "RQkfLX3V2yW07T9xUUH2YwopN4LpR376mLwLTdFuPhy",
-        2 => "8DGBDmgd7DyOVJ5IlfsOpwgWggOxPeW33Pm2o3SDcy0",
+        7 => "Mgh3wYjU11U8klMYRijZ4LxZprMufQQ8cTmcuMg6Xkh",
+        6 => "NgTP9Q6UOLdXRpyNeWEVZ2VGcJRowTPL42pXaarlxCf",
+        5 => "DT4Q5y5Y1htTzaOZGzMwZrm3qK9lBIItGoKdwOPfL9e",
+        4 => "809iDieyaz4TOEUqm0zTYt92fPBpAFaYfFcw7TIy4aq",
+        3 => "a0dUuzSHs1yY5Ps4uv4Xa7qrERWfziJ1Jp5WYgI90ja",
+        2 => "Td75qr7OXw2BoJp9n43kMwCEpdU6sD4vhYTowDq3Jhb",
         1 => ""
     ];
 
@@ -61,7 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->execute()) {
         // ตรวจสอบว่า token ไม่ใช่ค่าว่างก่อนส่งข้อความเข้าไลน์
         if (!empty($sToken)) {
-            $message = "$ownerName ได้ยืนขออนุมัติโครงการ \"$title\"";
+            $currentDate = date("d/m/Y");
+            $message = "ID: $documentId\nขออนุมัติโครงการ \"$title\"\nผู้ยื่นโครงการ: $ownerName\nวันที่ทำรายการ: $currentDate";
             sendLineNotify($sToken, $message);
         }
         echo json_encode(['success' => true]);
