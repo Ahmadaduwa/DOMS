@@ -26,106 +26,10 @@ if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
     <title>Admin Dashboard - Project Management</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Include SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="./style.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f6f9;
-        }
-
-        .sidebar {
-            height: 100vh;
-            position: fixed;
-            width: 250px;
-            background-color: #343a40;
-            padding-top: 20px;
-        }
-
-        .sidebar a {
-            padding: 15px;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            color: white;
-            font-size: 18px;
-        }
-
-        .sidebar a:hover {
-            background-color: #495057;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-        }
-
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-        }
-
-        .card {
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .card h5 {
-            font-weight: bold;
-        }
-
-        .card .card-body {
-            display: flex;
-            align-items: center;
-        }
-
-        .card .card-body i {
-            font-size: 3rem;
-            margin-right: 20px;
-        }
-
-        .bg-primary-light {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .bg-success-light {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .bg-warning-light {
-            background-color: #ffc107;
-            color: white;
-        }
-
-        .bg-danger-light {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .navbar {
-            margin-left: 250px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .table-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .table th,
-        .table td {
-            vertical-align: middle;
-        }
-
         .status-pending {
             color: #ffc107;
         }
@@ -289,6 +193,11 @@ if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
         </div>
     </div>
 
+    
+</body>
+<footer>
+    <!-- Include SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
@@ -361,9 +270,25 @@ if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
 
         // Example logout function (replace with actual logout functionality)
         function logout() {
-            alert("Logout clicked!");
+            event.preventDefault();
+            // ใช้ SweetAlert เพื่อแสดงข้อความยืนยัน
+            Swal.fire({
+                title: "คุณแน่ใจหรือไม่?",
+                text: "คุณต้องการออกจากระบบหรือไม่?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "ใช่, ออก",
+            }).then((result) => {
+                // หากผู้ใช้กดตกลง
+                if (result.isConfirmed) {
+                    // ทำการล็อคเอาท์
+                    window.location.href = "./../php_code/logout.php";
+                }
+            });
         }
-    </script>
-</body>
 
+    </script>
+</footer>
 </html>

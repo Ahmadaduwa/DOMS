@@ -1,3 +1,22 @@
+<?php require('helper/admincheck.php') ?>
+
+<?php
+
+$searchValue = '';
+$userType = '';
+$users = [];
+
+if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
+    $userType = $_GET['user_type'];
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE (username = ?)");
+    $stmt->bind_param("s",$userType);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $users = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,131 +28,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Include SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f6f9;
-        }
-
-        .sidebar {
-            height: 100vh;
-            position: fixed;
-            width: 250px;
-            background-color: #343a40;
-            padding-top: 20px;
-            overflow-y: auto; /* เพิ่ม overflow-y เพื่อให้มีการส่วนของข้อมูลหายไป */
-        }
-
-        .sidebar a {
-            padding: 15px;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            color: white;
-            font-size: 18px;
-        }
-
-        .sidebar a:hover {
-            background-color: #495057;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-        }
-
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-        }
-
-        .card {
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .card h5 {
-            font-weight: bold;
-        }
-
-        .card .card-body {
-            display: flex;
-            align-items: center;
-        }
-
-        .card .card-body i {
-            font-size: 3rem;
-            margin-right: 20px;
-        }
-
-        .bg-primary-light {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .bg-success-light {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .bg-warning-light {
-            background-color: #ffc107;
-            color: white;
-        }
-
-        .bg-danger-light {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .navbar {
-            margin-left: 250px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .table-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .table th,
-        .table td {
-            vertical-align: middle;
-        }
-
-        .status-pending {
-            color: orange;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .status-reject {
-            color: red;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .status-approve {
-            color: green;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .status-outline {
-            color: cadetblue;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -242,7 +137,7 @@
                                 echo "</td>";
 
                                 echo "<td class='text-center'>";
-                                echo "<button class='btn btn-info btn-sm'><i class='fas fa-eye'></i> Edit</button>";
+                                echo "<button class='btn btn-warning btn-sm editBtn mr-2' data-id='" . $row['id'] . "'><i class='fas fa-edit'></i> Edit</button>";
                                 echo "<button class='btn btn-danger btn-sm deleteBtn' data-id='" . $row['id'] . "'><i class='fas fa-trash'></i> Delete</button>";
                                 echo "</td>";
                                 echo "</tr>";
@@ -258,6 +153,44 @@
         </div>
     </div>
 
+    <!-- Modal HTML -->
+    <div class="modal fade" id="editDocumentModal" tabindex="-1" role="dialog" aria-labelledby="editDocumentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDocumentModalLabel">Edit Document</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editDocumentForm">
+                        <input type="hidden" id="documentId" name="documentId">
+                        <div class="form-group">
+                            <label for="documentTitle">Document Name</label>
+                            <input type="text" class="form-control" id="documentTitle" name="documentTitle" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectDropdown">Select Project</label>
+                            <input type="text" class="form-control mb-2" id="searchProjectInput" onkeyup="filterProjects()" placeholder="Search for projects...">
+                            <select class="form-control" id="projectDropdown" name="projectDropdown">
+                                <!-- Options will be populated dynamically -->
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveChanges()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+<footer>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Include SweetAlert2 JS -->
@@ -343,7 +276,85 @@
                 }
             });
         });
+        $(document).on("click", ".editBtn", function() {
+            var id = $(this).data("id");
+            var row = $(this).closest("tr");
+            var documentTitle = row.find("td:eq(1)").text();
+
+            $("#documentId").val(id);
+            $("#documentTitle").val(documentTitle);
+
+            // Fetch project titles from the server
+            $.ajax({
+                url: "./php_code/fetch_projects.php",
+                type: "GET",
+                success: function(response) {
+                    var responseData = JSON.parse(response);
+                    if (responseData.status === "success") {
+                        var projects = responseData.projects;
+                        var projectDropdown = $("#projectDropdown");
+                        projectDropdown.empty();
+                        projects.forEach(function(project) {
+                            projectDropdown.append(new Option(project.title, project.id));
+                        });
+                    } else {
+                        Swal.fire("Error!", "Unable to fetch projects.", "error");
+                    }
+                },
+                error: function() {
+                    Swal.fire("Error!", "Unable to fetch projects.", "error");
+                }
+            });
+
+            // Show the modal
+            $("#editDocumentModal").modal("show");
+        });
+
+        function filterProjects() {
+            var input, filter, select, options, i, txtValue;
+            input = document.getElementById("searchProjectInput");
+            filter = input.value.toUpperCase();
+            select = document.getElementById("projectDropdown");
+            options = select.getElementsByTagName("option");
+
+            for (i = 0; i < options.length; i++) {
+                txtValue = options[i].textContent || options[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    options[i].style.display = "";
+                } else {
+                    options[i].style.display = "none";
+                }
+            }
+        }
+
+
+        function saveChanges() {
+            var formData = $("#editDocumentForm").serialize();
+            $.ajax({
+                url: "./php_code/update_document.php",
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    // ไม่ต้องใช้ JSON.parse() เนื่องจากไม่ได้รับ JSON มา
+                    // ใช้ response ตรงๆ ในการแสดง Alert หรือประมวลผลต่อไป
+                    Swal.fire({
+                        title: 'แก้ไขเสร็จเรียบร้อย!',
+                        text: 'ข้อมูลได้รับการอัปเดตเรียบร้อยแล้ว',
+                        icon: 'success',
+                        confirmButtonText: 'ตกลง'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $("#editDocumentModal").modal("hide");
+                            location.reload(); // รีโหลดหน้าเพื่อทำให้มันแสดงการเปลี่ยนแปลงที่เกิดขึ้น
+                        }
+                    });
+                },
+                error: function() {
+                    Swal.fire("ข้อผิดพลาด!", "ไม่สามารถบันทึกการเปลี่ยนแปลงได้", "error");
+                }
+            });
+        }
     </script>
-</body>
+</footer>
 
 </html>
