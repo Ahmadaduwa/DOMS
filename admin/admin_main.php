@@ -16,9 +16,6 @@ if (isset($_GET['user_type']) && !empty($_GET['user_type'])) {
     $users = $result->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
 }
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

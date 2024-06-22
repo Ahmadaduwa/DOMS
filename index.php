@@ -42,9 +42,9 @@
             to { opacity: 1; }
         }
         .login-container {
-            width: 100%;
+            width: 90%;
             max-width: 600px;
-            padding: 30px;
+            padding: 20px;
             background: white;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -56,14 +56,14 @@
             to { transform: translateY(0); opacity: 1; }
         }
         .login-container h3 {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-weight: bold;
             color: #333;
             text-align: center;
         }
         .login-container .form-control {
             border-radius: 25px;
-            padding: 20px;
+            padding: 10px;
             font-size: 16px;
         }
         .login-container .btn {
@@ -95,35 +95,51 @@
         .gold-text {
             color: gold;
         }
+        @media (max-width: 576px) {
+            .header h2 {
+                font-size: 2rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .login-container {
+                padding: 15px;
+            }
+            .login-container .btn {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
-
-<div class="header">
-    <img src="./image/SAB Logo-03.png" alt="SAB Logo" width="100px">
-    <h2 class="gold-text">Welcome to E-doms</h2>
-    <p>Your document management solution</p>
-</div>
-<div class="login-container">
-    <h3>Login</h3>
-    <form action="login.php" method="post">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required >
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
+        <div class="header">
+            <img src="./image/SAB Logo-03.png" alt="SAB Logo" width="100px">
+            <h2 class="gold-text">Welcome to E-doms</h2>
+            <p>Your document management solution</p>
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+        <div class="login-container">
+            <h3>Login</h3>
+            <form action="login.php" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
-    </form>
-</div>
-<?php
-    require('./components/footerlogin/footer.php');
-?>
+    </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <?php
+        require('./components/footerlogin/footer.php');
+    ?>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

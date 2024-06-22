@@ -63,7 +63,7 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: "./../php_code/delete_document.php",
+                    url: "./php/delete_document.php",
                     type: "POST",
                     data: { id: id },
                     success: function (response) {
